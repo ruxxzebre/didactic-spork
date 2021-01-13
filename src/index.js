@@ -78,7 +78,7 @@ const parseMisc = (string) => {
   } else if (ACRONYMS.includes(string.toUpperCase())) {
     return string.toUpperCase();
   } else {
-    return w[0].toUpperCase() + w.slice(1).toLowerCase();
+    return string[0].toUpperCase() + string.slice(1).toLowerCase();
   }
 }
 
