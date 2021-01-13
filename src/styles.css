@@ -1,0 +1,62 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 100%;
+    background-color: rgba(0,0,0,0.1);
+}
+
+.arrow {
+    width: 30%;
+}
+
+.horizontal {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.horizontal textarea {
+    display: block;
+    min-width: 400px;
+    min-height: 600px;
+    resize: none;
+}
+
+.horizontal .arrow {
+    transform: rotate(1turn);
+}
+
+.vertical {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.vertical textarea {
+    display: block;
+    min-width: 600px;
+    min-height: 400px;
+    resize: none;
+}
+
+.vertical .arrow {
+    width: 15%;
+    margin: 60px;
+    transform: rotate(0.25turn);
+}
+
+.wrapper {
+    margin-top: 3%;
+}
+
+textarea {
+    display: block;
+    min-width: 400px;
+    min-height: 600px;
+    resize: none;
+}
