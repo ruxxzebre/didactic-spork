@@ -24,6 +24,10 @@ input.addEventListener('input', (e) => {
   }
 });
 
+const ACRONYMS = ['ID', 'URL', 'JSON', 'HTML', 'PDF', 'IP', 'SMS', 'ISO', 'ZIP', 'AMP', 'ISP', 'OS', 'IOS', 'UTM', 'UTC', 'GDPR', 'API', 'VAT', 'IVR', 'MRR', 'PO'];
+
+const ARTICLES = ['at', 'by', 'to', 'on', 'in', 'of', 'for', 'from', 'or', 'via', 'be', 'is'];
+
 const MATCH_TYPES = {
   array: (object) => Array.isArray(object),
   boolean: (object) => object.constructor.name === 'Boolean',
@@ -65,7 +69,17 @@ const parseType = (value) => {
 const parseLabel = (name) => {
   const regex = /(\d*[A-Z]*\d*[a-zA-Z]+\d*(?=[_\-\s]?)[a-z]*)/g;
   const words = name.match(regex);
-  return words.map(w => w[0].toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+  return words.map(w => parseMisc(w)).join(' ');
+}
+
+const parseMisc = (string) => {
+  if (ARTICLES.includes(string.toLowerCase())) {
+    return string.toLowerCase();
+  } else if (ACRONYMS.includes(string.toUpperCase())) {
+    return string.toUpperCase();
+  } else {
+    return w[0].toUpperCase() + w.slice(1).toLowerCase();
+  }
 }
 
 const itemConstructor = (key, type) => {
