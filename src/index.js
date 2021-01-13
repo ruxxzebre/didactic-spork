@@ -63,7 +63,7 @@ const parseType = (value) => {
 }
 
 const parseLabel = (name) => {
-  const regex = /([A-Z]*[a-zA-Z]+(?=[_\-\s]?)[a-z]*)/g;
+  const regex = /(\d*[A-Z]*\d*[a-zA-Z]+\d*(?=[_\-\s]?)[a-z]*)/g;
   const words = name.match(regex);
   return words.map(w => w[0].toUpperCase() + w.slice(1).toLowerCase()).join(' ');
 }
