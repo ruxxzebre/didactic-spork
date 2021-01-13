@@ -1,29 +1,3 @@
-const input = document.getElementById('input');
-const output = document.getElementById('output');
-const rotate = document.getElementById('arrowBtn');
-
-rotate.addEventListener('click', () => {
-  const wrapper = document.getElementsByClassName('wrapper')[0];
-  if (wrapper.className === 'wrapper vertical') {
-    wrapper.className = 'wrapper horizontal';
-  } else {
-    wrapper.className = 'wrapper vertical';
-  }
-});
-
-input.focus();
-input.addEventListener('input', (e) => {
-  let obj;
-  try {
-    obj = JSON.parse(e.target.value);
-    obj = processJSON(obj);
-    output.value = JSON.stringify(obj, null, 4);
-    output.select();
-  } catch (e) {
-    output.value = 'It is not valid JSON.';
-  }
-});
-
 //TODO - object and array items
 
 /**
@@ -132,7 +106,7 @@ const itemConstructor = (key, type) => {
  * @param {*} jsonObj
  * @return {IntegrationItem[]}
  */
-const processJSON = (jsonObj) => {
+export const processJSON = (jsonObj) => {
   const result = [];
   Object.keys(jsonObj).map(item => result.push(itemConstructor(item, parseType(jsonObj[item]))));
   return result;
