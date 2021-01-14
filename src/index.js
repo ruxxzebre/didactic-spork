@@ -83,6 +83,8 @@ const parseMisc = (string) => {
   } else if (ACRONYMS.includes(string.toUpperCase())) {
     return string.toUpperCase();
   } else {
+    // check if word initially in uppercase
+    if (string.toUpperCase() === string) return string;
     return string[0].toUpperCase() + string.slice(1).toLowerCase();
   }
 }
