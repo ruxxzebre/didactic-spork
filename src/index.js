@@ -42,18 +42,44 @@ const parseText = (text) => {
 }
 
 /**
+ * Parses values with array type, even with objects inside
+ * @param {*[]} array
+ * @param {string} customLabel
+ * @return {{type: string}}
+ */
+const parseArray = (array, customLabel='Probably should add yourself.') => {
+  const resultObj = {
+    type: 'array'
+  };
+  if (array.length > 1) {
+    // TODO: parse inner objects
+    resultObj.spec = [];
+  } else if (array.length === 1) {
+    resultObj.spec = {
+      type: parseType(array[0]),
+      label: customLabel
+    }
+  } else {
+    resultObj.spec = [];
+  }
+  return resultObj;
+}
+
+/**
  * Parses type of passed value accordingly to prod docs
  * @param {*} value
- * @return {string}
+ * @return {*}
  */
 const parseType = (value) => {
   for (let check in MATCH_TYPES) {
     if (MATCH_TYPES[check](value)) {
       const stringType = check.toString();
-      if (stringType !== 'string') {
-        return check.toString();
-      } else {
+      if (stringType === 'string') {
         return parseText(value);
+      } else if (stringType === 'array') {
+        return parseArray(value);
+      } else {
+        return check.toString();
       }
     }
   }
@@ -92,14 +118,14 @@ const parseMisc = (string) => {
 /**
  * Constructor function for single item
  * @param {string} key
- * @param {*} type
+ * @param {*} other - contains type and misc prop, like spec or options
  * @return {{name, label, type}}
  */
-const itemConstructor = (key, type) => {
+const itemConstructor = (key, other) => {
   return {
     name: key,
-    type,
-    label: parseLabel(key)
+    label: parseLabel(key),
+    ...other,
   }
 }
 
