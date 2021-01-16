@@ -47,14 +47,10 @@ const parseObject = (object) => {
   const { collection: isObject } = MATCH_TYPES;
   const resultObj = {
     type: 'collection',
-    options: []
+    spec: []
   };
   Object.keys(object).forEach((key) => {
-    if (isObject(key)) {
-      // DO SOMETHING
-      return;
-    }
-    resultObj.options.push(
+    resultObj.spec.push(
       itemConstructor(key, parseType(object[key]))
     );
   });
@@ -64,23 +60,23 @@ const parseObject = (object) => {
 /**
  * Parses values with array type, even with objects inside
  * @param {*[]} array
- * @param {string} customLabel
- * @return {{type: string, spec: *[]}}
+ * @return {{type: string, spec: *[] | Object}}
  */
-const parseArray = (array, customLabel='Probably should add yourself.') => {
+const parseArray = (array) => {
+  const { collection: isObject } = MATCH_TYPES;
   const resultObj = {
     type: 'array'
   };
-  if (array.length > 1) {
-    // TODO: parse inner objects
+  if (isObject(array[0])) {
     resultObj.spec = [];
-  } else if (array.length === 1) {
-    resultObj.spec = {
-      type: parseType(array[0]),
-      label: customLabel
-    }
+    const object = array[0];
+    Object.keys(object).forEach((key) => {
+      resultObj.spec.push(
+        itemConstructor(key, parseType(object[key]))
+      );
+    });
   } else {
-    resultObj.spec = [];
+    resultObj.spec = parseType(array[0]);
   }
   return resultObj;
 }
@@ -101,7 +97,7 @@ const parseType = (value) => {
       } else if (stringType === 'collection') {
         return parseObject(value);
       } else {
-        return check.toString();
+        return { type: check.toString() };
       }
     }
   }
@@ -156,8 +152,10 @@ const itemConstructor = (key, other) => {
  * @param {*} jsonObj
  * @return {IntegrationItem[]}
  */
-export const processJSON = (jsonObj) => {
+const processJSON = (jsonObj) => {
   const result = [];
   Object.keys(jsonObj).map(item => result.push(itemConstructor(item, parseType(jsonObj[item]))));
   return result;
 }
+
+module.exports.processJSON = processJSON;
