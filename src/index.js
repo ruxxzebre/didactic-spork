@@ -40,7 +40,7 @@ const parseText = (text) => {
       return { type: check.toString() };
     }
   }
-  return { type: check.toString() };
+  return { type: 'text' };
 }
 
 const parseObject = (object) => {
