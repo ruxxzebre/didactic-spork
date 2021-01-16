@@ -1,5 +1,3 @@
-//TODO - object and array items
-
 /**
  * Item for interfaces and parameters
  * @typedef {Object} IntegrationItem
