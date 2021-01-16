@@ -44,17 +44,11 @@ const parseText = (text) => {
 }
 
 const parseObject = (object) => {
-  const { collection: isObject } = MATCH_TYPES;
-  const resultObj = {
+  return {
     type: 'collection',
-    spec: []
+    spec: Object.keys(object)
+      .map((key) => itemConstructor(key, parseType(object[key])))
   };
-  Object.keys(object).forEach((key) => {
-    resultObj.spec.push(
-      itemConstructor(key, parseType(object[key]))
-    );
-  });
-  return resultObj;
 }
 
 /**
@@ -153,9 +147,8 @@ const itemConstructor = (key, other) => {
  * @return {IntegrationItem[]}
  */
 const processJSON = (jsonObj) => {
-  const result = [];
-  Object.keys(jsonObj).map(item => result.push(itemConstructor(item, parseType(jsonObj[item]))));
-  return result;
+  return Object.keys(jsonObj)
+    .map(item => itemConstructor(item, parseType(jsonObj[item])));
 }
 
 module.exports.processJSON = processJSON;
