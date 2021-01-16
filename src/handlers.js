@@ -20,15 +20,11 @@ input.focus();
 input.addEventListener('input', inputListener);
 withLabelCheckbox.addEventListener('change', (e) => {
   parseWithLabels = e.path[0].checked;
-  const forceEvent = new Event('input');
-  input.dispatchEvent(forceEvent);
+  dispatchInput();
 });
 editModeCheckbox.addEventListener('change', (e) => {
   editMode = e.path[0].checked;
-  if (!editMode) {
-    const forceEvent = new Event('input');
-    input.dispatchEvent(forceEvent);
-  }
+  if (!editMode) dispatchInput();
 })
 
 function inputListener(e)  {
@@ -45,4 +41,9 @@ function inputListener(e)  {
       output.value = 'It is not valid JSON.';
     }
   });
+}
+
+function dispatchInput() {
+  const forceEvent = new Event('input');
+  input.dispatchEvent(forceEvent);
 }
