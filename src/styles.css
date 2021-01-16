@@ -9,25 +9,30 @@ body {
 }
 
 .menu-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.menu-item {
     margin: 5px;
 }
 
 .arrow {
     width: 30%;
+    min-width: 50px;
+    cursor: pointer;
 }
 
 .horizontal {
-    display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
 }
 
 .horizontal textarea {
     display: block;
-    min-width: 400px;
+    width: 400px;
     min-height: 600px;
-    resize: none;
+    resize: horizontal;
 }
 
 .horizontal .arrow {
@@ -35,17 +40,13 @@ body {
 }
 
 .vertical {
-    display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
 }
 
 .vertical textarea {
     display: block;
-    min-width: 600px;
+    min-width: 300px;
     min-height: 400px;
-    resize: none;
 }
 
 .vertical .arrow {
@@ -55,12 +56,7 @@ body {
 }
 
 .wrapper {
-    margin-top: 3%;
-}
-
-textarea {
-    display: block;
-    min-width: 400px;
-    min-height: 600px;
-    resize: none;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }

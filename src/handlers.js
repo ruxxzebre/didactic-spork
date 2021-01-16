@@ -7,16 +7,19 @@ const editModeCheckbox = document.getElementById('editMode');
 let parseWithLabels = false;
 let editMode = false;
 
-rotate.addEventListener('click', () => {
-  const wrapper = document.getElementsByClassName('wrapper')[0];
-  if (wrapper.className === 'wrapper vertical') {
-    wrapper.className = 'wrapper horizontal';
+input.focus();
+
+window.matchMedia('(max-width: 600px)').addEventListener('change', (e) => {
+  const { matches } = e;
+  if (matches) {
+    toggleLayoutOrientation('vertical');
   } else {
-    wrapper.className = 'wrapper vertical';
+    toggleLayoutOrientation('horizontal');
   }
 });
-
-input.focus();
+rotate.addEventListener('click', () => {
+  toggleLayoutOrientation();
+});
 input.addEventListener('input', inputListener);
 withLabelCheckbox.addEventListener('change', (e) => {
   parseWithLabels = e.path[0].checked;
@@ -46,4 +49,25 @@ function inputListener(e)  {
 function dispatchInput() {
   const forceEvent = new Event('input');
   input.dispatchEvent(forceEvent);
+}
+
+function toggleLayoutOrientation(orientation=null) {
+  const wrapper = document.getElementsByClassName('wrapper')[0];
+  if (orientation) {
+    switch (orientation) {
+      case ('vertical'):
+        wrapper.className = 'wrapper vertical';
+        return;
+      case ('horizontal'):
+        wrapper.className = 'wrapper horizontal';
+        return;
+      default:
+        return;
+    }
+  }
+  if (wrapper.className === 'wrapper vertical') {
+    wrapper.className = 'wrapper horizontal';
+  } else {
+    wrapper.className = 'wrapper vertical';
+  }
 }
