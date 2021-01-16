@@ -25,7 +25,8 @@ const MATCH_TYPES = {
 
 const MATCH_STRING = {
   color: (string) => !!string.match(/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/g),
-  date: (string) => false,
+  date: (string) => /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/.test(string)
+    && (new Date(string)).toISOString() === string,
   email: (string) => !!string.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/gi)
 }
 
