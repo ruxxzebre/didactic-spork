@@ -4,8 +4,10 @@
  * Item for interfaces and parameters
  * @typedef {Object} IntegrationItem
  * @property {string} Name
- * @property {string} Type
  * @property {string} Label
+ * @property {string} Type
+ * @property {*} [spec]
+ * @property {*} [options]
  */
 
 const ACRONYMS = ['ID', 'URL', 'JSON', 'HTML', 'PDF', 'IP', 'SMS', 'ISO', 'ZIP', 'AMP', 'ISP', 'OS', 'IOS', 'UTM', 'UTC', 'GDPR', 'API', 'VAT', 'IVR', 'MRR', 'PO'];
@@ -17,7 +19,7 @@ const MATCH_TYPES = {
   boolean: (object) => object.constructor.name === 'Boolean',
   string: (object) => object.constructor.name === 'String',
   number: (object) => !isNaN(+object),
-  object: (object) => object.constructor.name === 'Object',
+  collection: (object) => object.constructor.name === 'Object',
   null: (object) => object === null,
 }
 
@@ -30,22 +32,40 @@ const MATCH_STRING = {
 /**
  * Parses type of the string
  * @param {string} text
- * @return {string}
+ * @return {{type: string}}
  */
 const parseText = (text) => {
   for (let check in MATCH_STRING) {
     if (MATCH_STRING[check](text)) {
-      return check.toString();
+      return { type: check.toString() };
     }
   }
-  return 'text';
+  return { type: check.toString() };
+}
+
+const parseObject = (object) => {
+  const { collection: isObject } = MATCH_TYPES;
+  const resultObj = {
+    type: 'collection',
+    options: []
+  };
+  Object.keys(object).forEach((key) => {
+    if (isObject(key)) {
+      // DO SOMETHING
+      return;
+    }
+    resultObj.options.push(
+      itemConstructor(key, parseType(object[key]))
+    );
+  });
+  return resultObj;
 }
 
 /**
  * Parses values with array type, even with objects inside
  * @param {*[]} array
  * @param {string} customLabel
- * @return {{type: string}}
+ * @return {{type: string, spec: *[]}}
  */
 const parseArray = (array, customLabel='Probably should add yourself.') => {
   const resultObj = {
@@ -78,6 +98,8 @@ const parseType = (value) => {
         return parseText(value);
       } else if (stringType === 'array') {
         return parseArray(value);
+      } else if (stringType === 'collection') {
+        return parseObject(value);
       } else {
         return check.toString();
       }
