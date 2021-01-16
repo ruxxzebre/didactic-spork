@@ -29,6 +29,11 @@ const parseText = (text) => {
   return { type: 'text' };
 }
 
+/**
+ * Parses object type values
+ * @param {*} object
+ * @return {{type: string, spec: *[]}}
+ */
 const parseObject = (object) => {
   return {
     type: 'collection',
