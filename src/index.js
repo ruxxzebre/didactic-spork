@@ -58,22 +58,10 @@ const parseObject = (object) => {
  * @return {{type: string, spec: *[] | Object}}
  */
 const parseArray = (array) => {
-  const { collection: isObject } = MATCH_TYPES;
-  const resultObj = {
-    type: 'array'
+  return {
+    type: 'array',
+    spec: parseType(array[0])
   };
-  if (isObject(array[0])) {
-    resultObj.spec = [];
-    const object = array[0];
-    Object.keys(object).forEach((key) => {
-      resultObj.spec.push(
-        itemConstructor(key, parseType(object[key]))
-      );
-    });
-  } else {
-    resultObj.spec = parseType(array[0]);
-  }
-  return resultObj;
 }
 
 /**
