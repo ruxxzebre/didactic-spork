@@ -61,11 +61,11 @@
             },
             {
               "name": "TestEmail",
-              "type": "text"
+              "type": "email"
             },
             {
               "name": "TestColor",
-              "type": "text"
+              "type": "color"
             }
           ]
         },
