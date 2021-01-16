@@ -23,7 +23,7 @@ function inputListener(e)  {
       output.value = JSON.stringify(obj, null, 4);
       output.select();
     } catch (e) {
-      console.log(e.message);
+      console.log(e);
       output.value = 'It is not valid JSON.';
     }
   });
