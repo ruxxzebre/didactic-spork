@@ -99,13 +99,13 @@ const parseType = (value) => {
 }
 
 /**
- * Label parser. Divides camelCase, snake_case and other cases
- * into needed form.
+ * Label parser. Divides camelCase, PascalCase,
+ * snake_case and other cases by words.
  * @param {string} name
  * @return {string}
  */
 const parseLabel = (name) => {
-  const regex = /(\d*[A-Z]*\d*[a-zA-Z]+\d*(?=[_\-\s]?)[a-z]*)/g;
+  const regex = /(\d*[A-Z]*\d*[a-zA-Z]\d*[a-z]*)/g;
   const words = name.match(regex);
   return words.map(w => parseMisc(w)).join(' ');
 }
