@@ -2,7 +2,10 @@ const input = document.getElementById('input');
 const output = document.getElementById('output');
 const rotate = document.getElementById('arrowBtn');
 const withLabelCheckbox = document.getElementById('parseWithLabels');
+const editModeCheckbox = document.getElementById('editMode');
+
 let parseWithLabels = false;
+let editMode = false;
 
 rotate.addEventListener('click', () => {
   const wrapper = document.getElementsByClassName('wrapper')[0];
@@ -20,8 +23,16 @@ withLabelCheckbox.addEventListener('change', (e) => {
   const forceEvent = new Event('input');
   input.dispatchEvent(forceEvent);
 });
+editModeCheckbox.addEventListener('change', (e) => {
+  editMode = e.path[0].checked;
+  if (!editMode) {
+    const forceEvent = new Event('input');
+    input.dispatchEvent(forceEvent);
+  }
+})
 
 function inputListener(e)  {
+  if (editMode || !e.target.value) return;
   import('./index').then((fns) => {
     let obj;
     try {
