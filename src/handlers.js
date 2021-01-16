@@ -1,6 +1,8 @@
 const input = document.getElementById('input');
 const output = document.getElementById('output');
 const rotate = document.getElementById('arrowBtn');
+const withLabelCheckbox = document.getElementById('parseWithLabels');
+let parseWithLabels = false;
 
 rotate.addEventListener('click', () => {
   const wrapper = document.getElementsByClassName('wrapper')[0];
@@ -13,13 +15,18 @@ rotate.addEventListener('click', () => {
 
 input.focus();
 input.addEventListener('input', inputListener);
+withLabelCheckbox.addEventListener('change', (e) => {
+  parseWithLabels = e.path[0].checked;
+  const forceEvent = new Event('input');
+  input.dispatchEvent(forceEvent);
+});
 
 function inputListener(e)  {
   import('./index').then((fns) => {
     let obj;
     try {
       obj = JSON.parse(e.target.value);
-      obj = fns.processJSON(obj);
+      obj = fns.processJSON(obj, parseWithLabels);
       output.value = JSON.stringify(obj, null, 4);
       output.select();
     } catch (e) {
