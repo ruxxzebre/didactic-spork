@@ -133,20 +133,28 @@ const parseMisc = (string) => {
  * @param {*} other - contains type and misc prop, like spec or options
  * @return {{name, label, type}}
  */
-const itemConstructor = (key, other) => {
-  return {
-    name: key,
-    label: parseLabel(key),
-    ...other,
-  }
-}
+let itemConstructor;
 
 /**
  *
  * @param {*} jsonObj
+ * @param {boolean} withLabel
  * @return {IntegrationItem[]}
  */
-const processJSON = (jsonObj) => {
+const processJSON = (jsonObj, withLabel=false) => {
+  if (withLabel) {
+    itemConstructor = (key, other) => ({
+      name: key,
+      label: parseLabel(key),
+      ...other,
+    });
+  } else {
+    itemConstructor = (key, other) => ({
+      name: key,
+      ...other,
+    });
+  }
+
   return Object.keys(jsonObj)
     .map(item => itemConstructor(item, parseType(jsonObj[item])));
 }
