@@ -2,6 +2,10 @@
 
 Didactic Spork
 
+## TODO
+
+> Spork with syntax highlighting (brackets for example)
+
 ## Building and running on localhost
 
 First install dependencies:
