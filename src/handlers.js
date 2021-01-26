@@ -1,8 +1,8 @@
 const input = document.getElementById('input');
 const output = document.getElementById('output');
-const rotate = document.getElementById('arrowBtn');
-const withLabelCheckbox = document.getElementById('parseWithLabels');
-const editModeCheckbox = document.getElementById('editMode');
+const rotateToggle = document.getElementById('arrowBtn');
+const labelToggler = document.getElementById('parseWithLabels');
+const editModeToggler = document.getElementById('editMode');
 
 let parseWithLabels = false;
 let editMode = false;
@@ -17,15 +17,15 @@ window.matchMedia('(max-width: 600px)').addEventListener('change', (e) => {
     toggleLayoutOrientation('horizontal');
   }
 });
-rotate.addEventListener('click', () => {
+rotateToggle.addEventListener('click', () => {
   toggleLayoutOrientation();
 });
 input.addEventListener('input', inputListener);
-withLabelCheckbox.addEventListener('change', (e) => {
+labelToggler.addEventListener('change', (e) => {
   parseWithLabels = e.path[0].checked;
   dispatchInput();
 });
-editModeCheckbox.addEventListener('change', (e) => {
+editModeToggler.addEventListener('change', (e) => {
   editMode = e.path[0].checked;
   if (!editMode) dispatchInput();
 })
