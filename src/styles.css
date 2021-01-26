@@ -29,6 +29,7 @@ body {
     justify-content: space-around;
     align-items: center;
 }
+
 /* Vertical view */
 @media all and (max-width: 600px) {
     .wrapper {
