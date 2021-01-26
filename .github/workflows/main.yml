@@ -14,7 +14,7 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: '15.x'
-    - name: Delete branch in specific repository with a specific owner
+    - name: Delete gh-pages branch
       uses: dawidd6/action-delete-branch@v3
       with:
         github_token: ${{github.token}}
@@ -25,7 +25,7 @@ jobs:
       run: |
         npm install
         npm run build-prod
-        cd dist
+      working-directory: ./dist
     - name: Commit files
       run: |
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
