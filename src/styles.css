@@ -24,39 +24,44 @@ body {
     cursor: pointer;
 }
 
-.horizontal {
-    flex-direction: row;
-}
-
-.horizontal textarea {
-    display: block;
-    width: 400px;
-    min-height: 600px;
-    resize: horizontal;
-}
-
-.horizontal .arrow {
-    transform: rotate(1turn);
-}
-
-.vertical {
-    flex-direction: column;
-}
-
-.vertical textarea {
-    display: block;
-    min-width: 300px;
-    min-height: 400px;
-}
-
-.vertical .arrow {
-    width: 15%;
-    margin: 60px;
-    transform: rotate(0.25turn);
-}
-
 .wrapper {
     display: flex;
     justify-content: space-around;
     align-items: center;
+}
+/* Vertical view */
+@media all and (max-width: 600px) {
+    .wrapper {
+        flex-direction: column;
+    }
+
+    .arrow {
+        width: 15%;
+        margin: 60px;
+        transform: rotate(0.25turn);
+    }
+
+    textarea {
+        display: block;
+        min-width: 300px;
+        min-height: 400px;
+    }
+}
+
+/* Horizontal view */
+@media all and (min-width: 600px) {
+    .wrapper {
+        flex-direction: row;
+    }
+
+    .arrow {
+        transform: rotate(1turn);
+    } 
+
+    textarea {
+        display: block;
+        width: 400px;
+        min-height: 600px;
+        resize: horizontal;
+    }
 }

@@ -1,6 +1,5 @@
 const input = document.getElementById('input');
 const output = document.getElementById('output');
-const rotateToggle = document.getElementById('arrowBtn');
 const labelToggler = document.getElementById('parseWithLabels');
 const editModeToggler = document.getElementById('editMode');
 
@@ -9,17 +8,6 @@ let editMode = false;
 
 input.focus();
 
-window.matchMedia('(max-width: 600px)').addEventListener('change', (e) => {
-  const { matches } = e;
-  if (matches) {
-    toggleLayoutOrientation('vertical');
-  } else {
-    toggleLayoutOrientation('horizontal');
-  }
-});
-rotateToggle.addEventListener('click', () => {
-  toggleLayoutOrientation();
-});
 input.addEventListener('input', inputListener);
 labelToggler.addEventListener('change', (e) => {
   parseWithLabels = e.path[0].checked;
@@ -49,25 +37,4 @@ function inputListener(e)  {
 function dispatchInput() {
   const forceEvent = new Event('input');
   input.dispatchEvent(forceEvent);
-}
-
-function toggleLayoutOrientation(orientation=null) {
-  const wrapper = document.getElementsByClassName('wrapper')[0];
-  if (orientation) {
-    switch (orientation) {
-      case ('vertical'):
-        wrapper.className = 'wrapper vertical';
-        return;
-      case ('horizontal'):
-        wrapper.className = 'wrapper horizontal';
-        return;
-      default:
-        return;
-    }
-  }
-  if (wrapper.className === 'wrapper vertical') {
-    wrapper.className = 'wrapper horizontal';
-  } else {
-    wrapper.className = 'wrapper vertical';
-  }
 }
