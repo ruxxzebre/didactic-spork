@@ -26,10 +26,11 @@ jobs:
         npm install
         npm run build-prod
     - name: Commit files
-      working-directory: ./dist
+      working-directory: dist
       run: |
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
+        cd dist
         git add -f .
         git commit -am "Add changes"
     - name: Push changes
