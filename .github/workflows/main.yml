@@ -29,12 +29,22 @@ jobs:
       run: |
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
-        cd dist
-        git rm -r .
         git add -f .
         git commit -am "Add changes"
-    - name: Push changes
-      uses: ad-m/github-push-action@master
+    - name: Pushes to another repository
+      uses: cpina/github-action-push-to-another-repository@master
+      env:
+       API_TOKEN_GITHUB: ${{github.token}}
       with:
-        github_token: ${{github.token}}
-        branch: gh-pages
+       source-directory: 'dist'
+       target-branch: 'gh-pages'
+       destination-github-username: 'ruxxzebre'
+       destination-repository-name: 'didactic-spork'
+       user-email: paullaboratory@gmail.com
+#     - name: Push changes
+# shiii         # cd dist
+        # git rm -r .
+#       uses: ad-m/github-push-action@master
+#       with:
+#         github_token: ${{github.token}}
+#         branch: gh-pages
