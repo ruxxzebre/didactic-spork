@@ -21,13 +21,14 @@ body {
 .arrow {
     width: 30%;
     min-width: 50px;
+    max-width: 200px;
     cursor: pointer;
 }
 
 .wrapper {
     display: flex;
     justify-content: space-around;
-    align-items: center;
+    align-items: flex-end;
 }
 
 /* Vertical view */
