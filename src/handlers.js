@@ -9,14 +9,8 @@ let editMode = false;
 input.focus();
 
 input.addEventListener('input', inputListener);
-labelToggler.addEventListener('change', (e) => {
-  parseWithLabels = e.path[0].checked;
-  dispatchInput();
-});
-editModeToggler.addEventListener('change', (e) => {
-  editMode = e.path[0].checked;
-  if (!editMode) dispatchInput();
-})
+labelToggler.addEventListener('change', labelTogglerListener);
+editModeToggler.addEventListener('change', editModeTogglerListener);
 
 function inputListener(e)  {
   if (editMode || !e.target.value) return;
@@ -32,6 +26,16 @@ function inputListener(e)  {
       output.value = 'It is not valid JSON.';
     }
   });
+}
+
+function labelTogglerListener(e) {
+  parseWithLabels = e.path[0].checked;
+  dispatchInput();
+}
+
+function editModeTogglerListener(e) {
+  editMode = e.path[0].checked;
+  if (!editMode) dispatchInput();
 }
 
 function dispatchInput() {
