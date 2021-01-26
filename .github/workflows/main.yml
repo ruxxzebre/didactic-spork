@@ -21,7 +21,6 @@ jobs:
         owner: ruxxzebre
         repository: didactic-spork
         branches: gh-pages
-        suffix: -done
     - name: Create local changes
       run: |
         npm install
