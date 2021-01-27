@@ -1,7 +1,3 @@
-const ACRONYMS = ['ID', 'URL', 'JSON', 'HTML', 'PDF', 'IP', 'SMS', 'ISO', 'ZIP', 'AMP', 'ISP', 'OS', 'IOS', 'UTM', 'UTC', 'GDPR', 'API', 'VAT', 'IVR', 'MRR', 'PO'];
-
-const ARTICLES = ['at', 'by', 'to', 'on', 'in', 'of', 'for', 'from', 'or', 'via', 'be', 'is'];
-
 const MATCH_TYPES = {
   null: (object) => object === null,
   array: (object) => Array.isArray(object),
@@ -19,8 +15,6 @@ const MATCH_STRING = {
 }
 
 module.exports = {
-  ACRONYMS,
-  ARTICLES,
   MATCH_TYPES,
   MATCH_STRING
 }

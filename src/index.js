@@ -1,9 +1,10 @@
 const {
-  ACRONYMS,
-  ARTICLES,
   MATCH_TYPES,
   MATCH_STRING
-} = require('./data');
+} = require('./match');
+
+const exclusions = require('./exclusions.json');
+const { acronyms, articles } = exclusions;
 
 /**
  * Item for interfaces and parameters
@@ -97,9 +98,9 @@ const parseLabel = (name) => {
  * @return {string}
  */
 const parseMisc = (string) => {
-  if (ARTICLES.includes(string.toLowerCase())) {
+  if (articles.includes(string.toLowerCase())) {
     return string.toLowerCase();
-  } else if (ACRONYMS.includes(string.toUpperCase())) {
+  } else if (acronyms.includes(string.toUpperCase())) {
     return string.toUpperCase();
   } else {
     // check if word initially in uppercase
