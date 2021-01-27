@@ -18,12 +18,17 @@ function inputListener(e)  {
     let obj;
     try {
       obj = JSON.parse(e.target.value);
+    } catch (e) {
+      console.log(e);
+      output.value = 'It is not valid JSON.';
+    }
+    try {
       obj = fns.processJSON(obj, parseWithLabels);
       output.value = JSON.stringify(obj, null, 4);
       output.select();
     } catch (e) {
       console.log(e);
-      output.value = 'It is not valid JSON.';
+      output.value = 'Internal error. Contact me on GitHub, or create an issue! Would be greatful.';
     }
   });
 }
