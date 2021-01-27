@@ -69,6 +69,8 @@ const parseType = (value) => {
         return parseArray(value);
       } else if (stringType === 'collection') {
         return parseObject(value);
+      } else if (stringType === 'null') {
+        return { type: 'text' };
       } else {
         return { type: check.toString() };
       }

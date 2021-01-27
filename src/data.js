@@ -3,12 +3,12 @@ const ACRONYMS = ['ID', 'URL', 'JSON', 'HTML', 'PDF', 'IP', 'SMS', 'ISO', 'ZIP',
 const ARTICLES = ['at', 'by', 'to', 'on', 'in', 'of', 'for', 'from', 'or', 'via', 'be', 'is'];
 
 const MATCH_TYPES = {
+  null: (object) => object === null,
   array: (object) => Array.isArray(object),
   boolean: (object) => object.constructor.name === 'Boolean',
   string: (object) => object.constructor.name === 'String',
   number: (object) => !isNaN(+object),
   collection: (object) => object.constructor.name === 'Object',
-  null: (object) => object === null,
 }
 
 const MATCH_STRING = {
