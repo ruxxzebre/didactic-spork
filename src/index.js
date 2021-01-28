@@ -3,7 +3,7 @@ const {
   MATCH_STRING
 } = require('./match');
 
-const exclusions = require('./exclusions.json');
+const exclusions = require('./assets/exclusions.json');
 const { acronyms, articles } = exclusions;
 
 /**
@@ -123,7 +123,7 @@ let itemConstructor;
  * @param {boolean} withLabel
  * @return {IntegrationItem[]}
  */
-const processJSON = (jsonObj, withLabel=false) => {
+const processJSON = (jsonObj, withLabel = false) => {
   if (withLabel) {
     itemConstructor = (key, other) => ({
       name: key,
