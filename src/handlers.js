@@ -21,6 +21,7 @@ function inputListener(e) {
     } catch (e) {
       console.log(e);
       output.value = 'It is not valid JSON.';
+      return;
     }
     try {
       obj = fns.processJSON(obj, parseWithLabels);
