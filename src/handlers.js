@@ -12,7 +12,7 @@ input.addEventListener('input', inputListener);
 labelToggler.addEventListener('change', labelTogglerListener);
 editModeToggler.addEventListener('change', editModeTogglerListener);
 
-function inputListener(e)  {
+function inputListener(e) {
   if (editMode || !e.target.value) return;
   import('./index').then((fns) => {
     let obj;
@@ -34,12 +34,14 @@ function inputListener(e)  {
 }
 
 function labelTogglerListener(e) {
-  parseWithLabels = e.path[0].checked;
+  const path = e.path || (e.composedPath && e.composedPath());
+  parseWithLabels = path[0].checked;
   dispatchInput();
 }
 
 function editModeTogglerListener(e) {
-  editMode = e.path[0].checked;
+  const path = e.path || (e.composedPath && e.composedPath());
+  editMode = path[0].checked;
   if (!editMode) dispatchInput();
 }
 
