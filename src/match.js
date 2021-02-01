@@ -1,7 +1,9 @@
 const MATCH_TYPES = {
   null: (object) => object === null,
-  undefined: () => {
-    throw new Error('Value is undefined. Probably empty value passed in function somewhere.');
+  undefined: (object) => {
+    if (object === undefined)
+      throw new Error('Value is undefined. Probably empty value passed in function somewhere.');
+    return false;
   },
   array: (object) => Array.isArray(object),
   boolean: (object) => object === !!object,
