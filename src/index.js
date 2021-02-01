@@ -51,7 +51,7 @@ const parseObject = (object) => {
 const parseArray = (array) => {
   return {
     type: 'array',
-    spec: parseType(array[0])
+    spec: array.length ? parseType(array[0]) : parseType("string")
   };
 }
 

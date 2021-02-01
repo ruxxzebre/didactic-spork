@@ -1,7 +1,10 @@
 const MATCH_TYPES = {
   null: (object) => object === null,
+  undefined: () => {
+    throw new Error('Value is undefined. Probably empty value passed in function somewhere.');
+  },
   array: (object) => Array.isArray(object),
-  boolean: (object) => object.constructor.name === 'Boolean',
+  boolean: (object) => object === !!object,
   string: (object) => object.constructor.name === 'String',
   number: (object) => !isNaN(+object),
   collection: (object) => object.constructor.name === 'Object',
