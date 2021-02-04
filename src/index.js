@@ -118,12 +118,30 @@ const parseMisc = (string) => {
 let itemConstructor;
 
 /**
+ * Cleans JSON from array wrapper
+ * @param jsonObj Initial JSON object
+ * @return {*} Cleaned JSON object
+ */
+const cleanJson = (jsonObj) => {
+  if (MATCH_TYPES.array(jsonObj) && jsonObj.length === 1) {
+    return jsonObj[0];
+  } else if (MATCH_TYPES.collection(jsonObj)) {
+    return jsonObj;
+  } else {
+    throw new Error(`Invalid JSON passed. 
+      Probably it\`s array with multiple items. 
+      Only Object or Object wrapped in array are valid input.`);
+  }
+};
+
+/**
  *
  * @param {*} jsonObj
  * @param {boolean} withLabel
  * @return {IntegrationItem[]}
  */
 const processJSON = (jsonObj, withLabel = false) => {
+  jsonObj = cleanJson(jsonObj);
   if (withLabel) {
     itemConstructor = (key, other) => ({
       name: key,
