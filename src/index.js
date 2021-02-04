@@ -1,9 +1,10 @@
 const {
-  ACRONYMS,
-  ARTICLES,
   MATCH_TYPES,
   MATCH_STRING
-} = require('./data');
+} = require('./match');
+
+const exclusions = require('./assets/exclusions.json');
+const { acronyms, articles } = exclusions;
 
 /**
  * Item for interfaces and parameters
@@ -50,7 +51,7 @@ const parseObject = (object) => {
 const parseArray = (array) => {
   return {
     type: 'array',
-    spec: parseType(array[0])
+    spec: array.length ? parseType(array[0]) : parseType("string")
   };
 }
 
@@ -69,6 +70,8 @@ const parseType = (value) => {
         return parseArray(value);
       } else if (stringType === 'collection') {
         return parseObject(value);
+      } else if (stringType === 'null') {
+        return { type: 'text' };
       } else {
         return { type: check.toString() };
       }
@@ -95,9 +98,9 @@ const parseLabel = (name) => {
  * @return {string}
  */
 const parseMisc = (string) => {
-  if (ARTICLES.includes(string.toLowerCase())) {
+  if (articles.includes(string.toLowerCase())) {
     return string.toLowerCase();
-  } else if (ACRONYMS.includes(string.toUpperCase())) {
+  } else if (acronyms.includes(string.toUpperCase())) {
     return string.toUpperCase();
   } else {
     // check if word initially in uppercase
@@ -120,7 +123,7 @@ let itemConstructor;
  * @param {boolean} withLabel
  * @return {IntegrationItem[]}
  */
-const processJSON = (jsonObj, withLabel=false) => {
+const processJSON = (jsonObj, withLabel = false) => {
   if (withLabel) {
     itemConstructor = (key, other) => ({
       name: key,

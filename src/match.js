@@ -1,14 +1,15 @@
-const ACRONYMS = ['ID', 'URL', 'JSON', 'HTML', 'PDF', 'IP', 'SMS', 'ISO', 'ZIP', 'AMP', 'ISP', 'OS', 'IOS', 'UTM', 'UTC', 'GDPR', 'API', 'VAT', 'IVR', 'MRR', 'PO'];
-
-const ARTICLES = ['at', 'by', 'to', 'on', 'in', 'of', 'for', 'from', 'or', 'via', 'be', 'is'];
-
 const MATCH_TYPES = {
+  null: (object) => object === null,
+  undefined: (object) => {
+    if (object === undefined)
+      throw new Error('Value is undefined. Probably empty value passed in function somewhere.');
+    return false;
+  },
   array: (object) => Array.isArray(object),
-  boolean: (object) => object.constructor.name === 'Boolean',
+  boolean: (object) => object === !!object,
   string: (object) => object.constructor.name === 'String',
   number: (object) => !isNaN(+object),
   collection: (object) => object.constructor.name === 'Object',
-  null: (object) => object === null,
 }
 
 const MATCH_STRING = {
@@ -19,8 +20,6 @@ const MATCH_STRING = {
 }
 
 module.exports = {
-  ACRONYMS,
-  ARTICLES,
   MATCH_TYPES,
   MATCH_STRING
 }

@@ -12,29 +12,37 @@ input.addEventListener('input', inputListener);
 labelToggler.addEventListener('change', labelTogglerListener);
 editModeToggler.addEventListener('change', editModeTogglerListener);
 
-function inputListener(e)  {
+function inputListener(e) {
   if (editMode || !e.target.value) return;
   import('./index').then((fns) => {
     let obj;
     try {
       obj = JSON.parse(e.target.value);
+    } catch (e) {
+      console.log(e);
+      output.value = 'It is not valid JSON.';
+      return;
+    }
+    try {
       obj = fns.processJSON(obj, parseWithLabels);
       output.value = JSON.stringify(obj, null, 4);
       output.select();
     } catch (e) {
       console.log(e);
-      output.value = 'It is not valid JSON.';
+      output.value = 'Internal error. Contact me on GitHub, or create an issue! Would be greatful.';
     }
   });
 }
 
 function labelTogglerListener(e) {
-  parseWithLabels = e.path[0].checked;
+  const path = e.path || (e.composedPath && e.composedPath());
+  parseWithLabels = path[0].checked;
   dispatchInput();
 }
 
 function editModeTogglerListener(e) {
-  editMode = e.path[0].checked;
+  const path = e.path || (e.composedPath && e.composedPath());
+  editMode = path[0].checked;
   if (!editMode) dispatchInput();
 }
 
