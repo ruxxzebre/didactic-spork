@@ -32,7 +32,7 @@ const parseText = (text) => {
 /**
  * Parses object type values
  * @param {*} object
- * @return {{type: string, spec: *[]}}
+ * @return {{type: string, spec: *}}
  */
 const parseObject = (object) => {
   return {
@@ -44,8 +44,8 @@ const parseObject = (object) => {
 
 /**
  * Parses values with array type, even with objects inside
- * @param {*[]} array
- * @return {{type: string, spec: *[] | Object}}
+ * @param {*} array
+ * @return {{type: string, spec: * | Object}}
  */
 const parseArray = (array) => {
   return {
