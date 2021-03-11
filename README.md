@@ -1,6 +1,6 @@
 # didactic-spork
 
-You can try [here](https://ruxxzebre.github.io/didactic-spork).
+You can try it [here](https://ruxxzebre.github.io/didactic-spork).
 
 ## TODO
 
