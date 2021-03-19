@@ -88,7 +88,7 @@ const parseType = (value) => {
  */
 const parseLabel = (name) => {
   const words = name.match(CASE_REGEX);
-  return words.map(w => parseMisc(w)).join(' ');
+  return words.filter(Boolean).map(w => parseMisc(w)).join(' ');
 }
 
 /**
