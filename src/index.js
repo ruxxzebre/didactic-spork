@@ -3,8 +3,8 @@ const {
   MATCH_STRING
 } = require('./match');
 
-const exclusions = require('./assets/exclusions.json');
-const { acronyms, articles } = exclusions;
+const { acronyms, articles } = require('./assets/exclusions.json');
+const { CASE_REGEX } = require('./constants');
 
 /**
  * Item for interfaces and parameters
@@ -87,8 +87,7 @@ const parseType = (value) => {
  * @return {string}
  */
 const parseLabel = (name) => {
-  const regex = /(\d*[A-Z]*\d*[a-zA-Z]\d*[a-z]*)/g;
-  const words = name.match(regex);
+  const words = name.match(CASE_REGEX);
   return words.map(w => parseMisc(w)).join(' ');
 }
 
