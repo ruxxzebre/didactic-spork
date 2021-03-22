@@ -3,6 +3,7 @@
   "env": {
     "es6": true,
     "browser": true,
+    "amd": true,
     "node": true
   },
   "parserOptions": {
@@ -14,6 +15,8 @@
   "extends": "eslint:recommended",
   "globals": {
     "Atomics": "readonly",
-    "SharedArrayBuffer": "readonly"
+    "SharedArrayBuffer": "readonly",
+    "window": true,
+    "module": true
   }
 }
