@@ -1,3 +1,8 @@
+import 'regenerator-runtime/runtime';
+
+const main_mod = import('./index');
+const JSON5_mod = import('json5');
+
 const input = document.getElementById('input');
 const output = document.getElementById('output');
 const labelToggler = document.getElementById('parseWithLabels');
@@ -12,26 +17,26 @@ input.addEventListener('input', inputListener);
 labelToggler.addEventListener('change', labelTogglerListener);
 editModeToggler.addEventListener('change', editModeTogglerListener);
 
-function inputListener(e) {
+async function inputListener(e) {
+  const main = await main_mod;
+  const JSON5 = await JSON5_mod;
   if (editMode || !e.target.value) return;
-  import('./index').then((fns) => {
-    let obj;
-    try {
-      obj = JSON.parse(e.target.value);
-    } catch (e) {
-      console.log(e);
-      output.value = 'It is not valid JSON.';
-      return;
-    }
-    try {
-      obj = fns.processJSON(obj, parseWithLabels);
-      output.value = JSON.stringify(obj, null, 4);
-      output.select();
-    } catch (e) {
-      console.log(e);
-      output.value = 'Internal error. Contact me on GitHub, or create an issue! Would be greatful.';
-    }
-  });
+  let obj;
+  try {
+    obj = JSON5.parse(e.target.value);
+  } catch (e) {
+    console.log(e);
+    output.value = 'It is not valid JSON.';
+    return;
+  }
+  try {
+    obj = main.processJSON(obj, parseWithLabels);
+    output.value = JSON.stringify(obj, null, 4);
+    output.select();
+  } catch (e) {
+    console.log(e);
+    output.value = 'Internal error. Contact me on GitHub, or create an issue! Would be greatful.';
+  }
 }
 
 function labelTogglerListener(e) {

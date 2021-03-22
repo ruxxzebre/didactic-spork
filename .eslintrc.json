@@ -2,11 +2,14 @@
   "rules": {},
   "env": {
     "es6": true,
-    "browser": true
+    "browser": true,
+    "node": true
   },
   "parserOptions": {
     "ecmaVersion": 2018,
-    "sourceType": "module"
+    "sourceType": "module",
+    "parser": "babel-eslint",
+    "allowImportExportEverywhere": true
   },
   "extends": "eslint:recommended",
   "globals": {
