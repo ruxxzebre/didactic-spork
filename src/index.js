@@ -39,7 +39,7 @@ const parseObject = (object) => {
   return {
     type: 'collection',
     spec: Object.keys(object)
-      .map((key) => itemConstructor(key, parseType(object[key])))
+      .map((key) => ItemConstructor(key, parseType(object[key])))
   };
 }
 
@@ -110,11 +110,25 @@ const parseMisc = (string) => {
 
 /**
  * Constructor function for single item
+ * @function ItemConstructor
  * @param {string} key
  * @param {*} other - contains type and misc prop, like spec or options
  * @return {{name, label, type}}
  */
-let itemConstructor;
+let ItemConstructor;
+
+/**
+ *
+ * @param {boolean} includeLabel
+ * @return ItemConstructor
+ */
+const NewItemConstructor = (includeLabel) => (key, other) => {
+  return {
+    name: key,
+    ...includeLabel && ({label: parseLabel(key)}),
+    ...other,
+  };
+}
 
 /**
  * Cleans JSON from array wrapper
@@ -141,21 +155,9 @@ const cleanJson = (jsonObj) => {
  */
 const processJSON = (jsonObj, withLabel = false) => {
   jsonObj = cleanJson(jsonObj);
-  if (withLabel) {
-    itemConstructor = (key, other) => ({
-      name: key,
-      label: parseLabel(key),
-      ...other,
-    });
-  } else {
-    itemConstructor = (key, other) => ({
-      name: key,
-      ...other,
-    });
-  }
-
+  ItemConstructor = NewItemConstructor(withLabel);
   return Object.keys(jsonObj)
-    .map(item => itemConstructor(item, parseType(jsonObj[item])));
+    .map(item => ItemConstructor(item, parseType(jsonObj[item])));
 }
 
 module.exports.processJSON = processJSON;
