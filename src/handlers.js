@@ -61,7 +61,7 @@ function keyPressTogglerListener(e) {
     if (prevPressedKey === mainKey) {
      elem.checked = !elem.checked;
     }
-    additional()
+    additional || additional();
     dispatchChange(elem);
   }
   switch(e.key) {
