@@ -56,11 +56,12 @@ function editModeTogglerListener(e) {
 
 function keyPressTogglerListener(e) {
   const mainKey = 'Control';
-  const wrapper = (elem) => {
+  const wrapper = (elem, additional) => {
     e.preventDefault();
     if (prevPressedKey === mainKey) {
      elem.checked = !elem.checked;
     }
+    additional()
     dispatchChange(elem);
   }
   switch(e.key) {
@@ -69,7 +70,7 @@ function keyPressTogglerListener(e) {
       prevPressedKey = 'Control';
     })();
     case '1': return wrapper(labelToggler);
-    case '2': return wrapper(editModeToggler);
+    case '2': return wrapper(editModeToggler, () => input.select());
     default: return prevPressedKey = '';
   }
 }
