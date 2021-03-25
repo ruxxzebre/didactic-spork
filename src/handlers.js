@@ -63,6 +63,7 @@ function keyPressTogglerListener(e) {
     }
     additional || additional();
     dispatchChange(elem);
+    return prevPressedKey = '';
   }
   switch(e.key) {
     case mainKey: return (() => {

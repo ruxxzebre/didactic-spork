@@ -88,7 +88,7 @@ const parseType = (value) => {
  */
 const parseLabel = (name) => {
   const words = name.match(CASE_REGEX);
-  return words.filter(Boolean).map(w => parseMisc(w)).join(' ');
+  return words.filter(Boolean).map((w, i) => parseMisc(w, i)).join(' ');
 }
 
 /**
@@ -96,16 +96,19 @@ const parseLabel = (name) => {
  * @param {string} string
  * @return {string}
  */
-const parseMisc = (string) => {
+const parseMisc = (string, index) => {
+  const upFirstLetter = ([first, ...rest]) => first.toUpperCase() + rest.join('');
+
+  if (index === 0) return upFirstLetter(string);
   if (articles.includes(string.toLowerCase())) {
     return string.toLowerCase();
   } else if (acronyms.includes(string.toUpperCase())) {
     return string.toUpperCase();
-  } else {
-    // check if word initially in uppercase
-    if (string.toUpperCase() === string) return string;
-    return string[0].toUpperCase() + string.slice(1).toLowerCase();
   }
+  // check if word initially in uppercase
+  if (string.toUpperCase() === string) return string;
+  return upFirstLetter(string);
+
 }
 
 /**
@@ -147,6 +150,34 @@ const cleanJson = (jsonObj) => {
   }
 };
 
+const ParseFormattedParameters = (json, withLabel) => {
+  const fields = [
+    'name', 'label', 'type', 'help', 'required', 'default', 'advanced', 'options', 'spec'
+  ];
+  const stabilityConf = -3;
+  const validateParam = (obj) => {
+    const keys = Object.keys(obj);
+    const cb = (i) => fields.includes(i);
+    return keys.filter(cb).length === keys.length;
+  };
+  let validFlag = true;
+  if (json.constructor.name !== 'Array') return null;
+  json = json.map(obj => {
+    if (!validateParam(obj)) return validFlag = false;
+    if (obj.name) {
+      if (!obj.label || withLabel) {
+        const parsedLabel = parseLabel(obj.name);
+        if (obj.label && obj.label.length + stabilityConf < parsedLabel.length) {
+          obj.label = parsedLabel;
+        }
+      }
+      return obj;
+    }
+    validFlag = false;
+  });
+  return validFlag ? json : null;
+};
+
 /**
  *
  * @param {*} jsonObj
@@ -154,6 +185,8 @@ const cleanJson = (jsonObj) => {
  * @return {IntegrationItem[]}
  */
 const processJSON = (jsonObj, withLabel = false) => {
+  let formatted;
+  if (formatted = ParseFormattedParameters(jsonObj, withLabel)) return formatted;
   jsonObj = cleanJson(jsonObj);
   ItemConstructor = NewItemConstructor(withLabel);
   return Object.keys(jsonObj)
