@@ -11,11 +11,14 @@ const editModeToggler = document.getElementById('editMode');
 let parseWithLabels = false;
 let editMode = false;
 
+let prevPressedKey = '';
+
 input.focus();
 
 input.addEventListener('input', inputListener);
 labelToggler.addEventListener('change', labelTogglerListener);
 editModeToggler.addEventListener('change', editModeTogglerListener);
+document.addEventListener('keydown', keyPressTogglerListener);
 
 async function inputListener(e) {
   const main = await main_mod;
@@ -51,7 +54,32 @@ function editModeTogglerListener(e) {
   if (!editMode) dispatchInput();
 }
 
+function keyPressTogglerListener(e) {
+  const mainKey = 'Control';
+  const wrapper = (elem) => {
+    e.preventDefault();
+    if (prevPressedKey === mainKey) {
+     elem.checked = !elem.checked;
+    }
+    dispatchChange(elem);
+  }
+  switch(e.key) {
+    case mainKey: return (() => {
+      e.preventDefault();
+      prevPressedKey = 'Control';
+    })();
+    case '1': return wrapper(labelToggler);
+    case '2': return wrapper(editModeToggler);
+    default: return prevPressedKey = '';
+  }
+}
+
 function dispatchInput() {
   const forceEvent = new Event('input');
   input.dispatchEvent(forceEvent);
+}
+
+function dispatchChange(elem) {
+  const forceEvent = new Event('change');
+  elem.dispatchEvent(forceEvent);
 }
